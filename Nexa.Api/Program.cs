@@ -33,12 +33,13 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins(
-                builder.Configuration.GetValue<string>("FrontendUrl")
-                ?? "https://nexa-2gvs-git-devin-1770873618-nexa-mvp-scaffold-nexttop.vercel.app/"
-            )
-            .AllowAnyMethod()
-            .AllowAnyHeader();
+        policy.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod();
+        //policy.WithOrigins(
+        //        builder.Configuration.GetValue<string>("FrontendUrl")
+        //        ?? "https://nexa-2gvs-git-devin-1770873618-nexa-mvp-scaffold-nexttop.vercel.app/"
+        //    )
+        //    .AllowAnyMethod()
+        //    .AllowAnyHeader();
     });
 });
 
