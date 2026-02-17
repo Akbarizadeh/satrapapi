@@ -21,7 +21,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<NexaDbContext>(options =>
     options.UseNpgsql(
-        builder.Configuration["OPENAI_API_KEY"]
+        builder.Configuration["Connection"]
     //builder.Configuration.GetConnectionString("DefaultConnection") ??
     //"Host=localhost;Database=nexa;Username=postgres;Password=postgres"
     ));
