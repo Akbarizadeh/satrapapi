@@ -26,6 +26,7 @@ builder.Services.AddDbContext<NexaDbContext>(options =>
     //"Host=localhost;Database=nexa;Username=postgres;Password=postgres"
     ));
 
+
 builder.Services.AddScoped<IAiService, AiService>();
 
 builder.Services.AddCors(options =>
@@ -51,5 +52,19 @@ var app = builder.Build();
 
 app.UseCors("AllowFrontend");
 app.MapControllers();
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        var db = scope.ServiceProvider.GetRequiredService<NexaDbContext>();
+        db.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Error while migrating database");
+        throw; // یا نزن اگر می‌خواهی اپ بالا بیاید حتی با دیتابیس خراب
+    }
+}
 
 app.Run();
